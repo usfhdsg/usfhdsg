@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#6b3b8f">
+  <title>生日快乐 🎂</title>
+  <style>
+    :root{--pink:#ffb7cf;--gold:#ffe7a3}
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;overflow:hidden;font-family:system-ui,-apple-system,"Microsoft YaHei",sans-serif;color:#fff;background:radial-gradient(circle at 15% 15%,#b86ca5 0,transparent 32%),radial-gradient(circle at 85% 85%,#456eaa 0,transparent 35%),linear-gradient(135deg,#211332,#49244f 58%,#192b4b)}
+    .glow{position:fixed;width:300px;height:300px;border-radius:50%;background:#ff9ecb33;filter:blur(65px);animation:drift 8s ease-in-out infinite alternate}
+    .card{position:relative;z-index:1;width:min(680px,100%);padding:clamp(30px,7vw,58px) 26px;text-align:center;border:1px solid #ffffff55;border-radius:30px;background:#ffffff19;backdrop-filter:blur(14px);box-shadow:0 25px 90px #0005}
+    .eyebrow{font-size:12px;letter-spacing:5px;color:#ffd6e5}
+    .cake{font-size:76px;margin:20px 0 8px;animation:bob 2s ease-in-out infinite}
+    h1{margin:8px 0;font-size:clamp(42px,9vw,76px);line-height:1.15;color:var(--gold);text-shadow:0 5px 25px #ffb6d977}
+    .person{font-size:clamp(22px,5vw,30px);color:var(--pink);margin:18px 0}
+    .message{max-width:480px;margin:0 auto 28px;line-height:2;font-size:17px;color:#fff0fa}
+    button{border:0;border-radius:999px;padding:15px 30px;font-size:16px;font-weight:700;color:#51274f;background:linear-gradient(100deg,#ffb4cb,#ffe3b5);box-shadow:0 8px 28px #ffb4cb55;cursor:pointer;transition:transform .2s}
+    button:hover{transform:translateY(-3px) scale(1.02)}
+    #wish{min-height:32px;margin-top:20px;color:var(--gold);font-size:16px}
+    footer{margin-top:30px;color:#ffffff9c;font-size:12px}
+    .float{position:fixed;top:-40px;z-index:2;pointer-events:none;animation:fall linear forwards}
+    @keyframes fall{to{transform:translateY(110vh) rotate(540deg);opacity:.2}}
+    @keyframes bob{50%{transform:translateY(-10px) rotate(3deg)}}
+    @keyframes drift{to{transform:translate(55vw,35vh) scale(1.3)}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <div class="glow" aria-hidden="true"></div>
+  <main class="card">
+    <div class="eyebrow">A DAY FULL OF LOVE &amp; JOY</div>
+    <div class="cake" aria-hidden="true">🎂</div>
+    <h1>生日快乐</h1>
+    <div class="person" id="person">亲爱的你</div>
+    <p class="message">愿新的一岁，<br>有数不尽的快乐，遇见更多美好；<br>心中有梦，眼里有光，脚下有路。<br>愿所有期待都能如约而至！</p>
+    <button type="button" id="wishButton">✨ 点击收下祝福</button>
+    <div id="wish" aria-live="polite">今天，你是全世界最闪亮的主角！</div>
+    <footer>Made with ❤️ · 祝你生日快乐</footer>
+  </main>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const name = params.get('name');
+    if (name) document.getElementById('person').textContent = name.slice(0,30);
+    const wishes = ['愿你平安喜乐，万事胜意！','愿每一个愿望都慢慢实现！','愿你所行皆坦途，所遇皆温柔！','新的一岁，继续闪闪发光！'];
+    document.getElementById('wishButton').addEventListener('click', () => {
+      document.getElementById('wish').textContent = wishes[Math.floor(Math.random()*wishes.length)];
+      const symbols = ['✨','💖','🎉','🌸','⭐'];
+      for(let i=0;i<28;i++){
+        const item=document.createElement('span');
+        item.className='float'; item.textContent=symbols[Math.floor(Math.random()*symbols.length)];
+        item.style.left=Math.random()*100+'vw';
+        item.style.animationDuration=(2.5+Math.random()*3)+'s';
+        item.style.fontSize=(16+Math.random()*20)+'px';
+        document.body.appendChild(item);
+        setTimeout(()=>item.remove(),5600);
+      }
+    });
+  </script>
+</body>
+</html>
